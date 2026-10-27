@@ -10,7 +10,7 @@ det = sipm.Detector("LaBr",sizeSPAD=15)
 det.sim_pulse_trace(timestep=4e-10, event_rate=1e7, trace_length=1e-6, verbose=True, E_arr=[50,110])
 
 # Extract the trace
-pulse_trace = det.df_pulses[0]
+pulse_trace = det.df_trace[0]
 
 # The time steps will depend on the chosen timestep
 # the code below converts it to the proper nanosecond scale

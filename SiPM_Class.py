@@ -96,7 +96,7 @@ class Detector:
 
     def R_E(self, a, b, c, E):
         """
-        Energy efficiency. This is a measure of the FWHM of the pulse height distribution as a function of energy. It is used to determine the standard deviation of scintillation triggers for a given energy.
+        Energy resolution. This is a measure of the FWHM of the pulse height distribution as a function of energy. It is used to determine the standard deviation of scintillation triggers for a given energy.
         """
         return a + b*E**c
 
@@ -181,7 +181,7 @@ class Detector:
             print(f'Last value in cdf_conv  = {self.cdf_conv[-1]:.3f}')
             print("================================\n")
 
-    def sim_single_pulses(self, N_events=1000, timestep=1e-9, verbose=False, E_arr = [100], seed=None):
+    def sim_single_pulses(self, N_events=1000, Emin=10, Emax=120, Estep=10, timestep=1e-9, verbose=False, E_arr = [100], seed=None):
         """
         Simulates N_events scintillation events with energies across defined range.
         Doesn't return anything explicitly but pulses are stored in the df_pulses attribute.
@@ -197,7 +197,15 @@ class Detector:
 
         # Parameters
         self.N_events = N_events
+        self.Emin     = Emin
+        self.Emax     = Emax
+        self.Estep    = Estep
         N_steps       = len(self.t)
+
+        # Energy array setup
+        if E_arr is not None: self.E_arr = np.array(E_arr)
+        else:                 self.E_arr = np.arange(Emin, Emax+Estep, Estep)
+        E_arr         = self.E_arr
 
         # Neighbour set up for crosstalk stuff
         n_neigbors      = 8
@@ -616,7 +624,7 @@ class Detector:
             pulse_trace[mask] += SSR[SSR_offset] # Add the SPAD response to the pulse trace at the right times, with the right offsets
             prog +=1 # Add to progress ticker
 
-        self.df_pulses = pd.DataFrame(pulse_trace)
+        self.df_trace = pd.DataFrame(pulse_trace)
         t1 = time.time()
 
         if verbose:
