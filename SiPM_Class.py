@@ -59,7 +59,7 @@ class Detector:
     The Detector Class is intended to couple a Scintillator object to some arbitrary detector parameters in order to create a full detector.
     """
 
-    def __init__(self, scintillator="LYSO", PDE=0.28, pixelSize=1000, sizeSPAD=15, prob_ct=0.08, spad_amplitudes=[1], spad_taus=[7], spad_t0s = [0], gain_SiPM=4e6):
+    def __init__(self, scintillator="LaBr", PDE=0.28, pixelSize=1000, sizeSPAD=15, prob_ct=0.08, spad_amplitudes=[1], spad_taus=[7], spad_t0s = [0], gain_SiPM=4e6):
 
         self.PDE             = PDE             # Photon detection efficiency, averaged over the emission spectrum of the scintillator
         self.pixelSize       = pixelSize       # In microns (assumes square)
@@ -77,12 +77,12 @@ class Detector:
             self.scintillator = SCINTILLATORS[scintillator]
         except KeyError:
             print(f"(!) The scintillator \"{scintillator}\" is not listed in the SCINTILLATORS as defined in SiPM_Class.py")
-            print(f"(!) Assigning default scintillator LYSO.")
-            self.scintillator = SCINTILLATORS["LYSO"]
+            print(f"(!) Assigning default scintillator LaBr.")
+            self.scintillator = SCINTILLATORS["LaBr"]
         except:
             print("(!) There is something rotten in the state of Denmark (something else went wrong with scintillation assignment)")
-            print(f"(!) Assigning default scintillator LYSO.")
-            self.scintillator = SCINTILLATORS["LYSO"]
+            print(f"(!) Assigning default scintillator LaBr.")
+            self.scintillator = SCINTILLATORS["LaBr"]
 
         if self.scintillator.nonProp[0] is None:
             self.nPfactor       = np.ones(1000)
