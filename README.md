@@ -1,4 +1,4 @@
-# sipmsalabim
+# ScintSipSim
 
 Based on the original work of Stefan van der Sar, this codebase aims to simulate the generation of pulses from a scintillator coupled to a SiPM. The code takes in a number of occured events (or an event rate) at specified energies and simulates the output pulse(s) based on various statistical derivations. The simulation takes into account cross-talk as well as pile-up (both for SPADs within an event and for events within a trace). The code does *not* perform any ray or particle like tracing to determine deposited energy or optical cross-talk. Instead it accepts a deposited energy within the scintillator.
 
